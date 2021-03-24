@@ -631,7 +631,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     public func requestNotifications() {
         let status = statusNotifications()
         switch status {
-        case .unknown:
+        case .unknown, .limited:
             let notificationsPermission = self.configuredPermissions
                 .first { $0 is NotificationsPermission } as? NotificationsPermission
             let notificationsPermissionSet = notificationsPermission?.notificationCategories
@@ -678,7 +678,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     public func requestMicrophone() {
         let status = statusMicrophone()
         switch status {
-        case .unknown:
+        case .unknown, .limited:
             AVAudioSession.sharedInstance().requestRecordPermission({ granted in
                 self.detectAndCallback()
             })
@@ -716,7 +716,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     public func requestCamera() {
         let status = statusCamera()
         switch status {
-        case .unknown:
+        case .unknown, .limited:
             AVCaptureDevice.requestAccess(for: AVMediaType(rawValue: convertFromAVMediaType(AVMediaType.video)),
                 completionHandler: { granted in
                     self.detectAndCallback()
@@ -746,6 +746,10 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
             return .unauthorized
         case .notDetermined:
             return .unknown
+        case .limited:
+            return .limited
+        @unknown default:
+            return .unknown
         }
     }
     
@@ -755,7 +759,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     public func requestPhotos() {
         let status = statusPhotos()
         switch status {
-        case .unknown:
+        case .unknown, .limited:
             PHPhotoLibrary.requestAuthorization({ status in
                 self.detectAndCallback()
             })
