@@ -598,10 +598,10 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     */
     @objc func finishedShowingNotificationPermission () {
         NotificationCenter.default.removeObserver(self,
-            name: UIApplication.willResignActiveNotification,
+                                                  name: UIApplication.willResignActiveNotification,
             object: nil)
         NotificationCenter.default.removeObserver(self,
-            name: UIApplication.didBecomeActiveNotification,
+                                                  name: UIApplication.didBecomeActiveNotification,
             object: nil)
         
         notificationTimer?.invalidate()
