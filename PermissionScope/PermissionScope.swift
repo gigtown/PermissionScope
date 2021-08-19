@@ -89,8 +89,8 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     var configuredPermissions: [Permission] = []
     var permissionButtons: [UIButton]       = []
     var permissionLabels: [UILabel]         = []
-	
-	// Useful for direct use of the request* methods
+    
+    // Useful for direct use of the request* methods
     
     /// Callback called when permissions status change.
     public var onAuthChange: authClosureType? = nil
@@ -99,8 +99,8 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     
     /// Called when the user has disabled or denied access to notifications, and we're presenting them with a help dialog.
     public var onDisabledOrDenied: cancelClosureType? = nil
-	/// View controller to be used when presenting alerts. Defaults to self. You'll want to set this if you are calling the `request*` methods directly.
-	public var viewControllerForAlerts : UIViewController?
+    /// View controller to be used when presenting alerts. Defaults to self. You'll want to set this if you are calling the `request*` methods directly.
+    public var viewControllerForAlerts : UIViewController?
 
     /**
     Checks whether all the configured permission are authorized or not.
@@ -153,8 +153,8 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     public init(backgroundTapCancels: Bool) {
         super.init(nibName: nil, bundle: nil)
 
-		viewControllerForAlerts = self
-		
+        viewControllerForAlerts = self
+        
         // Set up main view
         view.frame = UIScreen.main.bounds
         view.autoresizingMask = [UIView.AutoresizingMask.flexibleHeight, UIView.AutoresizingMask.flexibleWidth]
@@ -420,10 +420,10 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     Requests access to LocationAlways, if necessary.
     */
     public func requestLocationAlways() {
-    	let hasAlwaysKey:Bool = !Bundle.main
-    		.object(forInfoDictionaryKey: Constants.InfoPlistKeys.locationAlways).isNil
-    	assert(hasAlwaysKey, Constants.InfoPlistKeys.locationAlways + " not found in Info.plist.")
-    	
+        let hasAlwaysKey:Bool = !Bundle.main
+            .object(forInfoDictionaryKey: Constants.InfoPlistKeys.locationAlways).isNil
+        assert(hasAlwaysKey, Constants.InfoPlistKeys.locationAlways + " not found in Info.plist.")
+        
         let status = statusLocationAlways()
         switch status {
         case .unknown:
@@ -465,11 +465,11 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     /**
     Requests access to LocationWhileInUse, if necessary.
     */
-    public func requestLocationInUse() {
-    	let hasWhenInUseKey :Bool = !Bundle.main
-    		.object(forInfoDictionaryKey: Constants.InfoPlistKeys.locationWhenInUse).isNil
-    	assert(hasWhenInUseKey, Constants.InfoPlistKeys.locationWhenInUse + " not found in Info.plist.")
-    	
+    @objc public func requestLocationInUse() {
+        let hasWhenInUseKey :Bool = !Bundle.main
+            .object(forInfoDictionaryKey: Constants.InfoPlistKeys.locationWhenInUse).isNil
+        assert(hasWhenInUseKey, Constants.InfoPlistKeys.locationWhenInUse + " not found in Info.plist.")
+        
         let status = statusLocationInUse()
         switch status {
         case .unknown:
@@ -584,7 +584,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     }
     
     /**
-    A timer that fires the event to let us know the user has asked for 
+    A timer that fires the event to let us know the user has asked for
     notifications permission.
     */
     var notificationTimer : Timer?
@@ -628,7 +628,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     /**
     Requests access to User Notifications, if necessary.
     */
-    public func requestNotifications() {
+    @objc public func requestNotifications() {
         let status = statusNotifications()
         switch status {
         case .unknown, .limited:
@@ -1205,7 +1205,7 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
     
     /**
     This notification callback is triggered when the app comes back
-    from the settings page, after a user has tapped the "show me" 
+    from the settings page, after a user has tapped the "show me"
     button to check on a disabled permission. It calls detectAndCallback
     to recheck all the permissions and update the UI.
     */
@@ -1300,5 +1300,5 @@ typealias resultsForConfigClosure     = ([PermissionResult]) -> Void
 
 // Helper function inserted by Swift 4.2 migrator.
 fileprivate func convertFromAVMediaType(_ input: AVMediaType) -> String {
-	return input.rawValue
+    return input.rawValue
 }
